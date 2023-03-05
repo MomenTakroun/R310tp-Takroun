@@ -12,6 +12,7 @@ body {
     margin-bottom: 50px;
 }
 
+/*pour placer la div de dernière modification en bas de la page*/
 footer {
     position: fixed;
     bottom: 0;
@@ -20,6 +21,7 @@ footer {
     background-color: black;
 }
 
+/*Pour disposer l'heure numérique sur la même ligne*/
 #graphic-clock {
     display: flex;
 }

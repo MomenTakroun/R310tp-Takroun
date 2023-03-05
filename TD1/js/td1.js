@@ -28,6 +28,7 @@ function onLoad() {
 	//Exercice 3
 	listenerOnInput();
 	navMenu();
+	//Exercice 4
 	document.getElementById('buttonSearch').addEventListener("click", search);
 	document.getElementById('iSearch').addEventListener("input", interactiveSearch);
 	savedPage.innerHTML = document.body.innerHTML //sauvegarde de la page
@@ -54,11 +55,7 @@ function defineHeading2() {
  * Fonction qui change le titre de la page avec le contenu de la dernière balise h2 si il y en a sinon il met le nom et le prénom
  */
 function defineHeading3() {
-	if (document.getElementsByTagName('h2').length > 0) {
-		document.title = document.getElementsByTagName('h2')[document.getElementsByTagName('h2').length - 1].textContent;
-	} else {
-		document.title = 'Takroun Momen';
-	}
+	document.title = document.getElementsByTagName('h2').length > 0 ? document.getElementsByTagName('h2')[document.getElementsByTagName('h2').length - 1].textContent : 'Takroun Momen';
 }
 
 /**
@@ -66,12 +63,8 @@ function defineHeading3() {
  */
 function defineHeading4() {
 	let firstOrLast = document.getElementsByClassName('firstOrLast');
-	if (firstOrLast.length != 0) {
-		if (firstOrLast.length % 2 != 0) {
-			document.title = firstOrLast[firstOrLast.length - 1].textContent;
-		} else {
-			document.title = firstOrLast[0].textContent;
-		}
+	if (firstOrLast.length > 0) {
+		document.title = firstOrLast.length % 2 != 0 ? firstOrLast[firstOrLast.length - 1].textContent : firstOrLast[0].textContent;
 	} else {
 		document.title = "Takroun Momen";
 	}
@@ -95,12 +88,15 @@ function swapInnerHTML() {
  * Fonction qui indique la date de la dernière modification de la page et son auteur
  */
 function dateAlter() {
-	let date = new Date();
+	let date = new Date(document.lastModified);
 	let localDate = date.toLocaleString('fr-FR', {
 		weekday: 'long',
 		year: 'numeric',
 		month: 'long',
-		day: 'numeric'
+		day: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		second: 'numeric'
 	});
 	let metaTab = document.getElementsByTagName('meta');
 	for (let i = 0; i < metaTab.length; i++) {
@@ -206,13 +202,14 @@ function updateGraphicClockBonus() {
  * Fonction qui vérifie et indique à l'utilisateur que les caractères autres que les chiffres ne sont pas autorisés
  */
 function listenerOnInput() {
-	document.getElementById('background').addEventListener('input', () => {
-		if (document.getElementById('background').value.match(/^([1-9]+)$/)) {
-			document.getElementById('background').className = 'green';
-		} else if (document.getElementById('background').value.length != 0) {
-			document.getElementById('background').className = 'red';
+	let inputText = document.getElementById('background');
+	inputText.addEventListener('input', () => {
+		if (inputText.value.match(/^([1-9]+)$/)) {
+			inputText.className = 'green';
+		} else if (inputText.value.length != 0) {
+			inputText.className = 'red';
 		} else {
-			document.getElementById('background').className = 'white';
+			inputText.className = 'white';
 		}
 	});
 }
@@ -224,7 +221,7 @@ function listenerOnInput() {
  */
 function navMenu() {
 	let images = document.getElementsByTagName('aside')[0].getElementsByTagName('img');
-	let span = document.getElementsByTagName('aside')[0].getElementsByClassName('s');
+	let span = document.getElementsByTagName('aside')[0].getElementsByClassName('spanNav');
 	for (let i = 0; i < images.length; i++) {
 		if (images[i].getAttribute('src') == null) {
 			images[i].src = "/assets/images/plus.gif";
@@ -245,15 +242,26 @@ function navMenu() {
 //9 Exercice 4 : parcours de l’arbre DOM
 
 /**
+ * Fonction qui restaure la page en ajoutant les listners qui se sont supprimer lors de la sauvegarde
+ */
+function restorePage() {
+	document.body.innerHTML = savedPage.innerHTML;
+	listenerOnInput();
+	navMenu();
+	document.getElementById('buttonSearch').addEventListener("click", search);
+	document.getElementById('iSearch').addEventListener("input", interactiveSearch);
+}
+
+/**
  * Fonction récursif qui permet de remplacer le texte recherché par le background jaune le tout en traversant tous les noeuds du DOM
  * @param {*} actualNode Le noeud sur lequel on se trouve 
  * @param {*} searchedText  Le texte recherché
  */
-function replaceSearchedTex(actualNode, searchedText) {
+function replaceSearchedText(actualNode, searchedText) {
 	for (let i = 0; i < actualNode.childNodes.length; i++) {
 		if (actualNode.childNodes[i].textContent.includes(searchedText)) {
 			if (actualNode.childNodes[i].childNodes.length >= 1) {
-				replaceSearchedTex(actualNode.childNodes[i], searchedText);
+				replaceSearchedText(actualNode.childNodes[i], searchedText);
 			} else {
 				var s = document.createElement(actualNode.childNodes[i].tagName);
 				let temp = actualNode.childNodes[i].textContent.split(searchedText);
@@ -270,27 +278,23 @@ function replaceSearchedTex(actualNode, searchedText) {
 function search() {
 	let searchedText = document.getElementById('search').value;
 	if (searchedText != "") {
-		if (countSearch == 0) {
+		if (countSearch === 0) {
 			countSearch++;
 			document.getElementById('search').focus();
 			let body = document.body;
 			(body.childNodes).forEach(element => {
 				if (element.nodeType === element.ELEMENT_NODE) {
-					replaceSearchedTex(element, searchedText);
+					replaceSearchedText(element, searchedText);
 				}
 			});
 		} else {
-			document.body.innerHTML = savedPage.innerHTML;
-			listenerOnInput();
-			navMenu();
-			document.getElementById('buttonSearch').addEventListener("click", search);
-			document.getElementById('iSearch').addEventListener("input", interactiveSearch);
+			restorePage();
 			document.getElementById('search').focus();
 			document.getElementById('search').value = searchedText;
 			let body = document.body;
 			(body.childNodes).forEach(element => {
 				if (element.nodeType === element.ELEMENT_NODE) {
-					replaceSearchedTex(element, searchedText);
+					replaceSearchedText(element, searchedText);
 				}
 			});
 		}
@@ -304,11 +308,7 @@ function search() {
 function interactiveSearch() {
 	let searchedText = document.getElementById('iSearch').value;
 	if (searchedText == "" && countSearch != 0) {
-		document.body.innerHTML = savedPage.innerHTML;
-		listenerOnInput();
-		navMenu();
-		document.getElementById('buttonSearch').addEventListener("click", search);
-		document.getElementById('iSearch').addEventListener("input", interactiveSearch);
+		restorePage();
 		document.getElementById('iSearch').focus();
 	} else {
 		if (countSearch == 0) {
@@ -316,20 +316,16 @@ function interactiveSearch() {
 			let body = document.body;
 			(body.childNodes).forEach(element => {
 				if (element.nodeType === element.ELEMENT_NODE) {
-					replaceSearchedTex(element, searchedText);
+					replaceSearchedText(element, searchedText);
 				}
 			});
 		} else {
-			document.body.innerHTML = savedPage.innerHTML;
-			listenerOnInput();
-			navMenu();
-			document.getElementById('buttonSearch').addEventListener("click", search);
-			document.getElementById('iSearch').addEventListener("input", interactiveSearch);
+			restorePage();
 			document.getElementById('iSearch').focus();
 			document.getElementById('iSearch').value = searchedText;
 			(document.body.childNodes).forEach(element => {
 				if (element.nodeType === element.ELEMENT_NODE) {
-					replaceSearchedTex(element, searchedText);
+					replaceSearchedText(element, searchedText);
 				}
 			});
 		}
