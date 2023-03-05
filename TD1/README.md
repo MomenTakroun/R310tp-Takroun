@@ -1,6 +1,7 @@
 # M413 - TD1 : Réponses aux Questions
 
-# Exercice 1
+## Exercice 1
+### 6.1 La propriété « document.title »
 -  Quel sera l’évènement qui déclenchera l’appelle de votre fonction?
 
     L'évènement qui déclenchera la fonction sera le chargement de la page.
@@ -35,12 +36,12 @@
 
     Avec document.getElementsByClassName('firstOrLast').length % 2 == 0.
     
-
+### 6.2 Les propriétés innerHTML, innerText ettextContent
 - Quelles différences existe-t-il entre les 3 propriétés innerHTML, innerText et textContent ?
 
     innerHTML récupère le texte avec les balises HTMl (<span> dans notre code) alors que innerText et textContent récupère uniquement le texte. La différence entre les 2 dernières propriétés et que textContent a été standardisée et est supportée par plus de naviguateur que innerText.
     
-
+### 6.3 La propriété document.lastModified
 - Comment modifier votre code pour qu’il permette de sélectionner le 1er auteur de la liste ?
 
     for (let i = 0; i < metaTab.length; i++) {
@@ -61,7 +62,7 @@
 	}
 
 
-# Exercice 2
+## Exercice 2
 - Comment obtenez-vous le nombre de jours ?
 
     Je fais comparedDate - actualDate (qui retourne la différence en millisecond) puis je divise par 1000 puis par 60 puis par 60 et enfin par 24 et j'arrondis au supérieur.
@@ -71,12 +72,13 @@
 
     Je fais  document.getElementById('days').textContent = document.getElementById('days').textContent.replace('202x', year); et document.getElementById('days').textContent = document.getElementById('days').textContent.replace('xxx', daysRemaining); .
     
-
+### 7.1 setInterval() et setTimeout()
 - Laquelle des deux méthodes de l’objet window avez-vous utilisé ? Pourquoi ?
 
     Je préfère utiliser setInterval car il met à jour l'heure dynamiquement (en exécutant la fonction updateClock1 à chaque fois selon un temps donné après le chargement de la page) alors que setTimeout ne fais que exécuter 1 fois la fonction selon un temps donné après l'éxécution de la page.
     
-
+## Exercice 3
+### 8.1 Champ Texte et Couleur d’arrière-plan
 -  Quel évènement avez-vous utilisé ?
 
     J'ai utilisé document.getElementById('background').addEventListener('input', () => { changeBackground() });
