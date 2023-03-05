@@ -12,9 +12,7 @@ let countSearch = 0;//Compteur de recherche réaliser par l'utilisateur
 
 
 function onLoad() {
-	if (countSearch == 0) {
-		console.log('In onLoad() function…');
-	}
+	console.log('In onLoad() function…');
 	//Exercice 1
 	defineHeading4();
 	swapInnerHTML();
