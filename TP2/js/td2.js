@@ -25,7 +25,7 @@ function onLoad() {
 	//
 	// All your JavaScript code goes here !
 	//
-	//initSelect();
+	initSelect();
 	addDiv();
 	//Exercice 2
 	document.getElementById('buttonSearch').addEventListener("click", search);
@@ -41,15 +41,21 @@ window.onload = onLoad;
 //6.1 Sélection d’un Objet
 function initSelect() {
 	// Ajoute un écouteur d'évènements "click" à l'élément body
-	document.querySelector('body').addEventListener('click', select2);
+	document.querySelector('body').addEventListener('click', select);
 }
 
 function select(event) {
 	// Change la couleur de l'arrière-plan de l'élément en rouge
-	/*let colorBackground = event.target.style.backgroundColor;
-	console.log(typeof colorBackground)
-	event.target.style.backgroundColor = typeof event.target.style.backgroundColor === 'undefined' ? "red" : delete event.target.style.backgroundColor*/
-	event.target.style.backgroundColor = event.target.style.backgroundColor == "" ? "red" : "";
+	let colorBackground = event.target.style.backgroundColor;
+	if (colorBackground == "")colorBackground=undefined;
+	if(typeof colorBackground === 'undefined'){
+		event.target.style.backgroundColor = "red";
+		event.target.parentNode.style.backgroundColor="orange";
+	} else{
+		event.target.style.backgroundColor="";
+		delete(event.target.style.backgroundColor);
+		event.target.parentNode.style.backgroundColor="";
+	} 
 }
 
 //6.2 Insertion d'objets
@@ -62,14 +68,15 @@ function addDiv() {
 }
 
 function select2(event) {
-	if (event.target != document.getElementById('insert-div') && !event.target.closest('#insert-div')) {
+	if (event.target != document.getElementById('insert-div') && !event.target.closest('#insert-div') && event.target != document.getElementById('iSearch') && event.target != document.getElementById('search')) {
 		let lastElementClick = document.querySelectorAll('[style="background-color: blue;"]')[0];
 		if (typeof lastElementClick !== "undefined") {
 			lastElementClick.style.backgroundColor = "";
 		}
-		event.target.style.backgroundColor = event.target.style.backgroundColor == "" ? "blue" : "";
+		event.target.style.backgroundColor="blue";
 		insertElement(event.target);
 	}
+	 
 }
 
 function insertElement(target) {
@@ -119,7 +126,10 @@ function replaceSearchedText(actualNode, searchedText) {
  */
 function search() {
 	let searchedText = document.getElementById('search').value;
-	if (searchedText != "") {
+	if (searchedText == "") {
+		restorePage();
+		document.getElementById('search').focus();
+	} else {
 		if (countSearch === 0) {
 			countSearch++;
 			document.getElementById('search').focus();
