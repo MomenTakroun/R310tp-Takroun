@@ -17,6 +17,7 @@ let message = 'JavaScript is ok :)';
 const savedPage = document.createElement("body");//Un élément body qui servira à stocker la page pour la fonction search()
 
 let countSearch = 0;//Compteur de recherche réaliser par l'utilisateur
+let lastElementClick = undefined;//pour la fonction select 2
 // alert( message);
 console.log(message);
 
@@ -41,21 +42,21 @@ window.onload = onLoad;
 //6.1 Sélection d’un Objet
 function initSelect() {
 	// Ajoute un écouteur d'évènements "click" à l'élément body
-	document.querySelector('body').addEventListener('click', select);
+	document.querySelector('html').addEventListener('click', select2);
 }
 
 function select(event) {
 	// Change la couleur de l'arrière-plan de l'élément en rouge
 	let colorBackground = event.target.style.backgroundColor;
-	if (colorBackground == "")colorBackground=undefined;
-	if(typeof colorBackground === 'undefined'){
+	if (colorBackground == "") colorBackground = undefined;
+	if (typeof colorBackground === 'undefined' || colorBackground == "orange") {
 		event.target.style.backgroundColor = "red";
-		event.target.parentNode.style.backgroundColor="orange";
-	} else{
-		event.target.style.backgroundColor="";
-		delete(event.target.style.backgroundColor);
-		event.target.parentNode.style.backgroundColor="";
-	} 
+		event.target.parentNode.style.backgroundColor = "orange";
+	} else {
+		event.target.style.backgroundColor = event.target.hasChildNodes ? "orange" : "";
+		delete (event.target.style.backgroundColor);
+		event.target.parentNode.style.backgroundColor = "";
+	}
 }
 
 //6.2 Insertion d'objets
@@ -69,14 +70,14 @@ function addDiv() {
 
 function select2(event) {
 	if (event.target != document.getElementById('insert-div') && !event.target.closest('#insert-div') && event.target != document.getElementById('iSearch') && event.target != document.getElementById('search')) {
-		let lastElementClick = document.querySelectorAll('[style="background-color: blue;"]')[0];
 		if (typeof lastElementClick !== "undefined") {
 			lastElementClick.style.backgroundColor = "";
 		}
-		event.target.style.backgroundColor="blue";
+		event.target.style.backgroundColor = "blue";
+		lastElementClick = event.target;
 		insertElement(event.target);
 	}
-	 
+
 }
 
 function insertElement(target) {
@@ -183,3 +184,7 @@ function interactiveSearch() {
 		}
 	}
 }
+
+//Exercice 3
+
+//Séparer les select
