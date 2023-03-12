@@ -46,7 +46,7 @@ window.onload = onLoad;
  */
 function initSelect() {
 	// Ajoute un écouteur d'évènements "click" à l'élément body
-	document.querySelector('html').addEventListener('click', select3);
+	document.querySelector('html').addEventListener('click', select2);
 }
 
 /**
@@ -84,13 +84,13 @@ function select2(event) {
 		if (event.target != lastElementClick) {
 			event.target.style.backgroundColor = "blue";
 			lastElementClick = event.target;
-			if (event.target.nodeName != "HTML") insertElement(event);
+			if (event.target.nodeName != "HTML") insertElement(event.target);
 		}
 	}
 
 }
 
-function insertElement(event) {
+function insertElement(target) {
 	// Récupère les valeurs du formulaire
 	let type = document.getElementById('insert-type').value;
 	let text = document.getElementById('insert-text').value;
@@ -101,7 +101,7 @@ function insertElement(event) {
 	newElement.appendChild(textNode);
 
 	// Insère le nouvel élément avant l'élément cible
-	event.target.parentNode.insertBefore(newElement, event.target);
+	target.parentNode.insertBefore(newElement, target);
 }
 
 //Exercice 2
