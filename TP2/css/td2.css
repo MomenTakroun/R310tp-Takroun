@@ -9,3 +9,24 @@
 .select {
 	background-color: yellow;
 }
+
+p {
+	background-color: aqua;
+}
+
+a {
+	background-color: deeppink;
+}
+
+.brown {
+	background-color: brown;
+}
+
+#purple {
+	background-color: purple;
+}
+
+#title {
+	background-color: black;
+	color: white;
+}
