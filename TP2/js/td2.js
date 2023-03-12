@@ -11,7 +11,7 @@
 "use strict";
 debugger;
 
-// M413 - TD2
+// R410 - TD2
 let message = 'JavaScript is ok :)';
 
 const savedPage = document.createElement("body");//Un élément body qui servira à stocker la page pour la fonction search()
@@ -46,7 +46,7 @@ window.onload = onLoad;
  */
 function initSelect() {
 	// Ajoute un écouteur d'évènements "click" à l'élément body
-	document.querySelector('html').addEventListener('click', select2);
+	document.querySelector('html').addEventListener('click', select3);
 }
 
 /**
