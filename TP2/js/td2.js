@@ -215,7 +215,15 @@ function select3(event) {
 			}
 		});
 		if (!childSelected) event.target.style.backgroundColor = "";
-		if (!tabOfObjectClicked.includes(event.target.parentNode) && event.target.nodeName != "HTML") event.target.parentNode.style.backgroundColor = "";
 		tabOfObjectClicked.splice(tabOfObjectClicked.indexOf(event.target), 1);
+		if (!tabOfObjectClicked.includes(event.target.parentNode) && event.target.nodeName != "HTML") {
+			event.target.parentNode.style.backgroundColor = "";
+			(event.target.parentNode.childNodes).forEach(element => {
+				if (tabOfObjectClicked.includes(element)) {
+					event.target.parentNode.style.backgroundColor = "orange";
+					childSelected = true;
+				}
+			});
+		}
 	}
 }
