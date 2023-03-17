@@ -46,7 +46,7 @@ window.onload = onLoad;
  */
 function initSelect() {
 	// Ajoute un écouteur d'évènements "click" à l'élément body
-	document.querySelector('html').addEventListener('click', select2);
+	document.querySelector('html').addEventListener('click', select3);
 }
 
 /**
