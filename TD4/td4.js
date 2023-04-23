@@ -306,16 +306,16 @@ function Car(modele, conso100km) {
 }
 
 let car1 = new Car("Renault", 10);
+let car2 = new Car("Mercedes", 100);
 
 //b
 Car.prototype.addfuel = function (nblt) {
   this.reservoirlitre += nblt;
 }
 car1.addfuel(200);
-document.getElementById("3.2.b").textContent = "b : " + JSON.stringify(car1);
-
-let car2 = new Car("Renault", 100);
 car2.addfuel(200);
+document.getElementById("3.2.b").textContent = "b : " + JSON.stringify(car1) + "; " + JSON.stringify(car2);
+
 
 //c
 Car.prototype.drive = function (nbkm) {
@@ -351,4 +351,4 @@ Baby.prototype.jouer = function () {
   return "Je joue avec mon jouet favori " + this.jouetFavori;
 }
 
-document.getElementById('3.3.c').textContent = bebe.jouer();
+document.getElementById('3.3.c').textContent = "c : " + bebe.jouer();
